@@ -1,5 +1,5 @@
 <?php 
-require_once 'libs/swiftmailer/lib/swift_required.php';
+require_once dirname(dirname(__FILE__))  .'/libs/swiftmailer/lib/swift_required.php';
 
 class Mail {
 

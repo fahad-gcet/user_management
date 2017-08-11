@@ -1,5 +1,5 @@
 <?php
-include 'config/variables.php';
+include dirname(dirname(__FILE__)) . '/config/variables.php';
 class Database {
 	private $stmt;
 	private $host = DB_HOST;
@@ -9,15 +9,20 @@ class Database {
 	private $dbh;
 	private $error;
 		
-	public function __construct(){
-		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-		$options = array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-		try {
-			$this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-		} catch (PDOException $e) {
-			$this->error = $e->getMessage();
-		}
-	}
+	public function __construct() {
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $options = array(
+            PDO::ATTR_PERSISTENT    => true,
+            PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION
+        );
+        try{
+            $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+        }
+        catch(PDOException $e){
+            $this->error = "Database Error!!!";
+            die($this->error);
+        }
+    }
 
 	public function query($query) {
 		$this->stmt = $this->dbh->prepare($query);

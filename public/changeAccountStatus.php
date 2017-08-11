@@ -2,7 +2,7 @@
 session_start();
 $username = $_GET['username'];
 if ($username != $_SESSION['username'] and $_SESSION['isAdmin']) {
-	include 'classes/user.class.php';
+	include dirname(dirname(__FILE__)) . '/classes/user.class.php';
 	$user = new User();
 	$status = $user->checkBlocked($username);
 	$user->changeAccountStatus($username, $status);

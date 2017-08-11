@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Login</title>
-	<link rel="stylesheet" href="shared/style.css">
+	<link rel="stylesheet" href="assets/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
@@ -22,7 +22,7 @@ if (isset($_SESSION['username'])) {
 if (isset($_POST['logIn'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
-	include 'classes/user.class.php';
+	include dirname(dirname(__FILE__)) . '/classes/user.class.php';
 	$user = new User();
 	$userStatus = $user->logIn($username, $password);
 	if ($userStatus == 'success') {

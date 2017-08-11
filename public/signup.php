@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Sign Up</title>
-	<link rel="stylesheet" type="text/css" href="shared/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
@@ -29,7 +29,7 @@ if (isset($_POST['signUp'])) {
 	$password = $_POST['password'];
 	$confirmPassword = $_POST['confirmPassword'];
 
-	include 'classes/user.class.php';
+	include dirname(dirname(__FILE__)) . '/classes/user.class.php';
 	$user = new User();
 
 	if (empty($username)) {
@@ -60,7 +60,7 @@ if (isset($_POST['signUp'])) {
 		
 		$user->signUp($username, $email, $password, $token);
 		
-		include 'classes/mailer.class.php';
+		include dirname(dirname(__FILE__)) . '/classes/mailer.class.php';
 		$link = VERIFICATION_LINK . rawurlencode($token);
 		$mail = new Mail();
 		$mail->sendVerificationMail($email, $link);
