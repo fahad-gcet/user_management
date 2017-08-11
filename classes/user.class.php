@@ -223,7 +223,7 @@ class User {
 
 	public function deleteUserInterests($user_id, $interest_id) {
 		$database = new Database();
-		$database->query('DELETE FROM user_interests WHERE user_id= :user_id and interest_id= :interest_id');
+		$database->query('DELETE FROM user_interests WHERE user_id= :user_id AND interest_id= :interest_id');
 		$database->bind(':user_id', $user_id);
 		$database->bind(':interest_id', $interest_id);
 		$database->execute();
@@ -234,6 +234,21 @@ class User {
 		$database->query('SELECT username, firstName, lastName, email, mob_no FROM users');
 		$rows = $database->resultset();
 		return $rows;
+	}
+
+	public function checkValid($access_identifier, $signature) {
+		$database = new Database();
+		$database->query('SELECT access_secret FROM clients WHERE access_identifier = :access_identifier');
+		$database->bind(':access_identifier', $access_identifier);
+		$row = $database->single();
+		if ($database->rowCount() == 1) {
+			$access_secret = $row['access_secret'];
+			$actualSignature = hash_hmac('sha256', $access_identifier, $access_secret);
+			if ($signature == $actualSignature) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 ?>

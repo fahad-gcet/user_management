@@ -1,5 +1,6 @@
 <?php
 include dirname(dirname(__FILE__)) . '/config/variables.php';
+
 class Database {
 	private $stmt;
 	private $host = DB_HOST;
