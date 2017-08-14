@@ -1,8 +1,10 @@
 <?php
 include dirname(dirname(dirname(dirname(__FILE__)))) . '/classes/user.class.php';
 $request_method = $_SERVER["REQUEST_METHOD"];
-$access_identifier = $_GET['identifier'];
-$signature = $_GET['signature'];
+$raw_post = file_get_contents("php://input");
+$data = json_decode($raw_post, true);
+$access_identifier = $data['identifier'];
+$signature = $data['signature'];
 $user = new User();
 
 if ($user->checkValid($access_identifier, $signature)) {
@@ -18,9 +20,11 @@ if ($user->checkValid($access_identifier, $signature)) {
 		echo json_encode($response);
 	} else {
 		header("HTTP/1.0 405 Method Not Allowed", true, 405);
+		echo "Method Not Allowed 405";
 	}
 }
 else {
 	header("HTTP/1.0 401 Unauthorized", true, 401);
+	echo "Unauthorized Access 401";
 }
 ?>
