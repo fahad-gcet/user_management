@@ -25,6 +25,11 @@ if (isset($_POST['apply'])) {
 	include dirname(dirname(__FILE__)) . '/classes/client.class.php';
 	$client = new Client();
 	$client->addClient($uid, $companyName, $appName, $email);
+	
+	include dirname(dirname(__FILE__)) . '/classes/mailer.class.php';
+	$mail = new Mail();
+	$mail->sendNewClientMail();
+
 	header('location:clientApplication.php?msg=1');
 }
 ?>

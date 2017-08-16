@@ -13,9 +13,9 @@ class Mail {
             ->setTo($email)
             ->setBody('<html>' . ' <head></head>' . ' <body>' . ' Thanks for signing up. Click on  ' .   $link.  ' to activate your account.' . ' </body>' . '</html>', 'text/html');
         $result = $mailer->send($message);
-      }
+    }
 
-      public function sendClientCredentials($email, $access_identifier, $access_secret) {
+    public function sendClientCredentials($email, $access_identifier, $access_secret) {
         $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
             ->setUsername(USERNAME)
             ->setPassword(PASSWORD);
@@ -25,6 +25,18 @@ class Mail {
             ->setTo($email)
             ->setBody('<html>' . ' <head></head>' . ' <body>' . ' Thanks!! Your request has been approved.<br><br> Access Identifier: ' .   $access_identifier.  '<br>Access Secret: ' . $access_secret . ' </body>' . '</html>', 'text/html');
         $result = $mailer->send($message);
-      }
     }
+
+    public function sendNewClientMail() {
+        $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+            ->setUsername(USERNAME)
+            ->setPassword(PASSWORD);
+        $mailer = Swift_Mailer::newInstance($transport);
+        $message = Swift_Message::newInstance('New Client Request')
+            ->setFrom(array(USERNAME . '@' . PROVIDER . '.com' => 'admin@profilehub.com'))
+            ->setTo('fahadmohdshahid@gmail.com')
+            ->setBody('<html>' . ' <head></head>' . ' <body>' . 'Hi Fahad, There is a new client request. To view request click ' . NEW_CLIENT_LINK .  '</body>' . '</html>', 'text/html');
+        $result = $mailer->send($message);
+    }
+}
 ?>
