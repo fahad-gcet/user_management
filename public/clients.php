@@ -22,7 +22,7 @@ $rows = $client->getAllClients();
 <div class="row">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			<h3 class="panel-title">Users</h3>
+			<h3 class="panel-title">Clients</h3>
 		</div>
 		<table id="datatable" class="table table-striped table-bordered">
 			<thead>

@@ -1,10 +1,15 @@
 <?php
 include dirname(dirname(dirname(dirname(__FILE__)))) . '/classes/user.class.php';
 $request_method = $_SERVER["REQUEST_METHOD"];
-$raw_post = file_get_contents("php://input");
-$data = json_decode($raw_post, true);
-$access_identifier = $data['identifier'];
-$signature = $data['signature'];
+
+$requestDigest =  $_SERVER['HTTP_AUTHORIZATION'];
+
+
+
+$requestDigest = substr($requestDigest, 6);
+$decoded = base64_decode($requestDigest);
+$access_identifier = explode(':', $decoded)[0];
+$signature = explode(':', $decoded)[1];
 $user = new User();
 
 if ($user->checkValid($access_identifier, $signature)) {
